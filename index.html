@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ferrum Sheet Metal — Custom Fabrication & HVAC, Langley BC</title>
+<meta name="description" content="Ferrum Sheet Metal — precision sheet metal fabrication, HVAC ductwork, and architectural metalwork serving Langley Township and the Lower Mainland." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Archivo:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg:        #0b0b0c;
+    --bg-2:      #131316;
+    --surface:   #1a1a1d;
+    --line:      #26262b;
+    --line-2:    #3a3a40;
+    --ink:       #ededee;
+    --ink-dim:   #9a9a9f;
+    --ink-mute:  #5e5e64;
+    --accent:    #ea580c;       /* molten copper */
+    --accent-2:  #fb923c;       /* heated edge */
+    --steel:     #6b7280;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Archivo', sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* Grain overlay — sits above everything for that fabrication-shop atmosphere */
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0.06;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+
+  .display {
+    font-family: 'Bebas Neue', sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    line-height: 0.88;
+    text-transform: uppercase;
+  }
+  .mono { font-family: 'JetBrains Mono', monospace; letter-spacing: 0.02em; }
+
+  .container {
+    max-width: 1380px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* ============ TOP BAR ============ */
+  .topbar {
+    position: sticky; top: 0;
+    z-index: 50;
+    background: rgba(11,11,12,0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .topbar-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 32px;
+    max-width: 1380px; margin: 0 auto;
+  }
+  .logo {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .logo-mark {
+    width: 38px; height: 38px;
+    background: var(--accent);
+    display: grid; place-items: center;
+    color: #0b0b0c;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    transform: skewX(-8deg);
+  }
+  .logo-mark span { display: block; transform: skewX(8deg); }
+  .logo-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.12em;
+  }
+  .logo-text small {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--ink-mute);
+    letter-spacing: 0.3em;
+    margin-top: -2px;
+  }
+
+  .nav { display: flex; gap: 36px; }
+  .nav a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav a::before {
+    content: "";
+    position: absolute;
+    left: -14px; top: 50%;
+    width: 6px; height: 1px;
+    background: var(--accent);
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .nav a:hover { color: var(--ink); }
+  .nav a:hover::before { opacity: 1; }
+
+  .topbar .cta {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--accent);
+    color: #0b0b0c;
+    padding: 12px 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 700;
+    transition: background 0.2s;
+  }
+  .topbar .cta:hover { background: var(--accent-2); }
+
+  @media (max-width: 880px) {
+    .nav { display: none; }
+  }
+
+  /* ============ HERO ============ */
+  .hero {
+    position: relative;
+    padding: 80px 0 60px;
+    border-bottom: 1px solid var(--line);
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(800px 400px at 90% 10%, rgba(234,88,12,0.10), transparent 60%),
+      linear-gradient(180deg, transparent 60%, rgba(234,88,12,0.03) 100%);
+    pointer-events: none;
+  }
+  /* Diagonal hairline grid in hero */
+  .hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, var(--line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+    background-size: 80px 80px;
+    opacity: 0.4;
+    pointer-events: none;
+    mask-image: linear-gradient(180deg, rgba(0,0,0,0.5), transparent 70%);
+  }
+
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    color: var(--ink-dim);
+    text-transform: uppercase;
+    margin-bottom: 36px;
+    position: relative; z-index: 2;
+  }
+  .hero-tag::before {
+    content: "";
+    width: 40px; height: 1px;
+    background: var(--accent);
+  }
+
+  .hero h1 {
+    position: relative; z-index: 2;
+    margin: 0;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 14vw, 230px);
+    line-height: 0.85;
+    letter-spacing: -0.01em;
+  }
+  .hero h1 .line-2 {
+    display: block;
+    color: transparent;
+    -webkit-text-stroke: 2px var(--ink);
+  }
+  .hero h1 .accent {
+    color: var(--accent);
+  }
+
+  .hero-meta {
+    position: relative; z-index: 2;
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 40px;
+    align-items: end;
+    border-top: 1px solid var(--line-2);
+    padding-top: 32px;
+  }
+  .hero-meta p { margin: 0; max-width: 460px; color: var(--ink-dim); font-size: 17px; line-height: 1.6; }
+  .hero-stat { border-left: 1px solid var(--line-2); padding-left: 20px; }
+  .hero-stat .num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 64px; line-height: 0.9;
+    color: var(--ink);
+  }
+  .hero-stat .num span { color: var(--accent); }
+  .hero-stat .lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.2em;
+    color: var(--ink-mute); text-transform: uppercase;
+    margin-top: 8px;
+  }
+
+  @media (max-width: 880px) {
+    .hero-meta { grid-template-columns: 1fr 1fr; }
+    .hero-meta p { grid-column: 1 / -1; }
+  }
+
+  /* ============ SECTION SCAFFOLD ============ */
+  section { position: relative; padding: 120px 0; border-bottom: 1px solid var(--line); }
+  .section-eyebrow {
+    display: flex; align-items: center; gap: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+  }
+  .section-eyebrow::before { content: ""; width: 28px; height: 1px; background: var(--accent); }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 7vw, 100px);
+    line-height: 0.9;
+    margin: 0 0 60px;
+    max-width: 14ch;
+  }
+  .section-title em { font-style: normal; color: var(--accent); }
+
+  /* ============ SERVICES ============ */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    border-top: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+  }
+  .service {
+    padding: 48px 40px;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    transition: background 0.3s;
+    cursor: default;
+  }
+  .service:hover { background: var(--bg-2); }
+  .service .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--ink-mute);
+    margin-bottom: 32px;
+  }
+  .service h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 44px;
+    line-height: 0.95;
+    margin: 0 0 18px;
+    letter-spacing: 0.01em;
+  }
+  .service p { margin: 0 0 28px; color: var(--ink-dim); font-size: 15px; max-width: 50ch; }
+  .service .arrow {
+    position: absolute;
+    bottom: 40px; right: 40px;
+    width: 28px; height: 28px;
+    border: 1px solid var(--line-2);
+    display: grid; place-items: center;
+    transition: all 0.3s;
+  }
+  .service:hover .arrow {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #0b0b0c;
+  }
+  .service .arrow svg { width: 12px; height: 12px; }
+
+  @media (max-width: 720px) {
+    .services-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ============ MARQUEE ============ */
+  .marquee {
+    overflow: hidden;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: var(--bg-2);
+    padding: 28px 0;
+  }
+  .marquee-track {
+    display: flex;
+    gap: 80px;
+    animation: scroll 40s linear infinite;
+    white-space: nowrap;
+    width: max-content;
+  }
+  .marquee-track span {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 0.04em;
+    color: var(--ink-mute);
+    display: inline-flex; align-items: center; gap: 80px;
+  }
+  .marquee-track span::after {
+    content: "";
+    width: 8px; height: 8px;
+    background: var(--accent);
+    transform: rotate(45deg);
+    display: inline-block;
+  }
+  @keyframes scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* ============ ABOUT / WHY ============ */
+  .why {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .why-left .section-title { margin-bottom: 32px; }
+  .why-left p {
+    color: var(--ink-dim);
+    font-size: 17px; line-height: 1.7;
+    max-width: 48ch;
+    margin: 0 0 20px;
+  }
+
+  .why-right { display: flex; flex-direction: column; }
+  .pillar {
+    border-top: 1px solid var(--line);
+    padding: 28px 0;
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+  .pillar:last-child { border-bottom: 1px solid var(--line); }
+  .pillar .idx {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .pillar h4 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    margin: 0 0 8px;
+    letter-spacing: 0.02em;
+  }
+  .pillar p { margin: 0; color: var(--ink-dim); font-size: 15px; line-height: 1.6; }
+
+  @media (max-width: 880px) {
+    .why { grid-template-columns: 1fr; gap: 48px; }
+  }
+
+  /* ============ PROCESS ============ */
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--line);
+  }
+  .step {
+    padding: 40px 28px 60px;
+    border-right: 1px solid var(--line);
+    position: relative;
+  }
+  .step:last-child { border-right: none; }
+  .step .step-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 110px;
+    line-height: 0.9;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--line-2);
+    margin-bottom: 24px;
+  }
+  .step:hover .step-num {
+    -webkit-text-stroke: 1px var(--accent);
+    color: var(--accent);
+    transition: all 0.4s;
+  }
+  .step h4 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    margin: 0 0 10px;
+    letter-spacing: 0.04em;
+  }
+  .step p { margin: 0; color: var(--ink-dim); font-size: 14px; line-height: 1.55; }
+
+  @media (max-width: 880px) {
+    .process-steps { grid-template-columns: repeat(2, 1fr); }
+    .step:nth-child(2) { border-right: none; }
+  }
+  @media (max-width: 520px) {
+    .process-steps { grid-template-columns: 1fr; }
+    .step { border-right: none; border-bottom: 1px solid var(--line); }
+  }
+
+  /* ============ CONTACT ============ */
+  .contact-wrap {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .contact-left .section-title em { display: block; }
+  .contact-left p {
+    max-width: 44ch; color: var(--ink-dim); font-size: 17px; line-height: 1.65;
+  }
+
+  .contact-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 0;
+  }
+  .contact-row {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    padding: 28px 32px;
+    border-bottom: 1px solid var(--line);
+    align-items: center;
+    gap: 20px;
+  }
+  .contact-row:last-child { border-bottom: none; }
+  .contact-row .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .contact-row .value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+  }
+  .contact-row .value.small {
+    font-family: 'Archivo', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0;
+  }
+  .contact-row a.value:hover { color: var(--accent); transition: color 0.2s; }
+
+  .contact-cta {
+    display: block;
+    background: var(--accent);
+    color: #0b0b0c;
+    text-align: center;
+    padding: 28px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.1em;
+    transition: background 0.2s;
+  }
+  .contact-cta:hover { background: var(--accent-2); }
+
+  @media (max-width: 880px) {
+    .contact-wrap { grid-template-columns: 1fr; gap: 48px; }
+  }
+
+  /* ============ FOOTER ============ */
+  footer {
+    padding: 60px 0 40px;
+    background: var(--bg);
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    padding-bottom: 60px;
+    border-bottom: 1px solid var(--line);
+  }
+  .footer-top h5 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin: 0 0 18px;
+    font-weight: 500;
+  }
+  .footer-top ul { list-style: none; padding: 0; margin: 0; }
+  .footer-top li { margin-bottom: 10px; }
+  .footer-top a { color: var(--ink-dim); font-size: 14px; }
+  .footer-top a:hover { color: var(--accent); }
+  .footer-brand .display {
+    font-size: 80px;
+    line-height: 0.85;
+    margin: 0;
+  }
+  .footer-brand .display .accent { color: var(--accent); }
+  .footer-brand p {
+    color: var(--ink-mute); font-size: 13px; margin-top: 16px;
+    max-width: 38ch;
+  }
+
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+
+  @media (max-width: 880px) {
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .footer-brand { grid-column: 1 / -1; }
+    .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+  }
+
+  /* ============ ENTRANCE ANIMATIONS ============ */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero-tag    { animation: fadeUp 0.8s 0.1s both; }
+  .hero h1 .line-1 { animation: fadeUp 0.9s 0.25s both; display: block; }
+  .hero h1 .line-2 { animation: fadeUp 0.9s 0.4s both; }
+  .hero-meta   { animation: fadeUp 0.8s 0.6s both; }
+</style>
+</head>
+<body>
+
+<!-- ===== TOP BAR ===== -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="#" class="logo" aria-label="Ferrum Sheet Metal home">
+      <div class="logo-mark"><span>F</span></div>
+      <div class="logo-text">
+        Ferrum
+        <small>SHEET&nbsp;METAL · BC</small>
+      </div>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#process">Process</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a href="tel:+17783843405" class="cta">
+      <span>Get a Quote</span>
+    </a>
+  </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-tag">
+      <span>EST. LANGLEY TOWNSHIP · BRITISH COLUMBIA</span>
+    </div>
+    <h1 class="display">
+      <span class="line-1">Forged from <span class="accent">iron.</span></span>
+      <span class="line-2">Built to last.</span>
+    </h1>
+
+    <div class="hero-meta">
+      <p>
+        Custom sheet metal fabrication, HVAC ductwork, and architectural
+        metalwork engineered to spec — for residential, commercial, and
+        industrial builds across the Lower Mainland.
+      </p>
+      <div class="hero-stat">
+        <div class="num">04</div>
+        <div class="lbl">Core Disciplines</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num"><span>∞</span></div>
+        <div class="lbl">Custom Capability</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MARQUEE ===== -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>HVAC DUCTWORK</span>
+    <span>CUSTOM FABRICATION</span>
+    <span>ARCHITECTURAL METAL</span>
+    <span>FLASHING &amp; ROOFING</span>
+    <span>RESIDENTIAL</span>
+    <span>COMMERCIAL</span>
+    <span>INDUSTRIAL</span>
+    <!-- duplicate for seamless loop -->
+    <span>HVAC DUCTWORK</span>
+    <span>CUSTOM FABRICATION</span>
+    <span>ARCHITECTURAL METAL</span>
+    <span>FLASHING &amp; ROOFING</span>
+    <span>RESIDENTIAL</span>
+    <span>COMMERCIAL</span>
+    <span>INDUSTRIAL</span>
+  </div>
+</div>
+
+<!-- ===== SERVICES ===== -->
+<section id="services">
+  <div class="container">
+    <div class="section-eyebrow"><span>01 / Capabilities</span></div>
+    <h2 class="section-title display">What we <em>build.</em></h2>
+
+    <div class="services-grid">
+      <article class="service">
+        <div class="num">— 001</div>
+        <h3>HVAC<br/>Ductwork</h3>
+        <p>Custom-fabricated supply, return, and exhaust ductwork for residential and commercial systems. Engineered for airflow efficiency and clean installation.</p>
+        <div class="arrow">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13L13 3M13 3H6M13 3v7"/></svg>
+        </div>
+      </article>
+
+      <article class="service">
+        <div class="num">— 002</div>
+        <h3>Custom<br/>Fabrication</h3>
+        <p>One-off and small-batch sheet metal work — brackets, panels, enclosures, transitions, and bespoke parts cut, formed, and welded to your drawings.</p>
+        <div class="arrow">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13L13 3M13 3H6M13 3v7"/></svg>
+        </div>
+      </article>
+
+      <article class="service">
+        <div class="num">— 003</div>
+        <h3>Architectural<br/>Metalwork</h3>
+        <p>Cladding, fascia, soffit details, custom flashings, and feature panels. Clean lines, tight tolerances, and finishes that hold up to BC weather.</p>
+        <div class="arrow">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13L13 3M13 3H6M13 3v7"/></svg>
+        </div>
+      </article>
+
+      <article class="service">
+        <div class="num">— 004</div>
+        <h3>Roofing<br/>Flashing</h3>
+        <p>Step flashings, valley pans, drip edges, chimney saddles, and custom profiles. Built to seal, shed water, and outlast the roofs they protect.</p>
+        <div class="arrow">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13L13 3M13 3H6M13 3v7"/></svg>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ABOUT / WHY ===== -->
+<section id="about">
+  <div class="container">
+    <div class="why">
+      <div class="why-left">
+        <div class="section-eyebrow"><span>02 / The shop</span></div>
+        <h2 class="section-title display">Metal,<br/>measured <em>twice.</em></h2>
+        <p>
+          Ferrum is a working sheet metal shop based in Langley Township, BC.
+          We fabricate to spec — from a single bracket to full HVAC packages
+          for new construction. No middlemen, no off-the-shelf compromise.
+          Drawings come in, finished metal goes out.
+        </p>
+        <p>
+          We work directly with homeowners, builders, mechanical contractors,
+          architects, and roofers across the Lower Mainland.
+        </p>
+      </div>
+
+      <div class="why-right">
+        <div class="pillar">
+          <div class="idx">/01</div>
+          <div>
+            <h4>Built to drawing</h4>
+            <p>Send us prints, sketches, or a measurement off the wall — we'll fabricate to your spec, not a stock catalogue.</p>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="idx">/02</div>
+          <div>
+            <h4>Trades-grade tolerances</h4>
+            <p>Tight bends, clean welds, square corners. Our work fits the first time so installers aren't fighting it on site.</p>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="idx">/03</div>
+          <div>
+            <h4>Local turnaround</h4>
+            <p>Serving Langley, Surrey, Abbotsford, and the Lower Mainland — quick quotes, faster lead times than out-of-region shops.</p>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="idx">/04</div>
+          <div>
+            <h4>Materials that last</h4>
+            <p>Galvanized, stainless, aluminum, and coated steels — gauged correctly for the job and the weather it will live in.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROCESS ===== -->
+<section id="process">
+  <div class="container">
+    <div class="section-eyebrow"><span>03 / Workflow</span></div>
+    <h2 class="section-title display">How a job <em>moves</em> through the shop.</h2>
+
+    <div class="process-steps">
+      <div class="step">
+        <div class="step-num display">01</div>
+        <h4>Quote</h4>
+        <p>Send drawings, photos, or rough dimensions. We come back with scope, materials, and pricing — no guesswork.</p>
+      </div>
+      <div class="step">
+        <div class="step-num display">02</div>
+        <h4>Detail</h4>
+        <p>Final measurements, bend allowances, and shop drawings confirmed before a single sheet gets cut.</p>
+      </div>
+      <div class="step">
+        <div class="step-num display">03</div>
+        <h4>Fabricate</h4>
+        <p>Cut, brake, weld, and finish in our Langley shop. Quality-checked piece by piece, not at the end.</p>
+      </div>
+      <div class="step">
+        <div class="step-num display">04</div>
+        <h4>Deliver</h4>
+        <p>Crated, labelled, and dropped to site or pickup ready. Installation support a phone call away.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-wrap">
+      <div class="contact-left">
+        <div class="section-eyebrow"><span>04 / Get in touch</span></div>
+        <h2 class="section-title display">Got a job? <em>Let's talk metal.</em></h2>
+        <p>
+          Drop us a line with what you're building, send drawings if you have
+          them, or just call the shop. Quotes are free, and we'll tell you
+          straight whether it's something we can take on.
+        </p>
+      </div>
+
+      <div class="contact-card">
+        <div class="contact-row">
+          <div class="label">Phone</div>
+          <a href="tel:+17783843405" class="value">(778) 384-3405</a>
+        </div>
+        <div class="contact-row">
+          <div class="label">Address</div>
+          <div class="value small">
+            20487 65 Ave<br/>
+            Langley Twp, BC&nbsp;&nbsp;V2Y 3K5
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="label">Service Area</div>
+          <div class="value small">
+            Langley · Surrey · Abbotsford ·<br/>
+            Greater Vancouver
+          </div>
+        </div>
+        <a href="tel:+17783843405" class="contact-cta">Call the shop →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="display">
+          Ferrum<br/>
+          <span class="accent">/sheet metal/</span>
+        </div>
+        <p>Custom sheet metal fabrication and HVAC ductwork. Langley Township, British Columbia.</p>
+      </div>
+
+      <div>
+        <h5>Services</h5>
+        <ul>
+          <li><a href="#services">HVAC Ductwork</a></li>
+          <li><a href="#services">Custom Fabrication</a></li>
+          <li><a href="#services">Architectural Metal</a></li>
+          <li><a href="#services">Flashing &amp; Roofing</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5>Site</h5>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#process">Process</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5>Reach Us</h5>
+        <ul>
+          <li><a href="tel:+17783843405">(778) 384-3405</a></li>
+          <li><a href="#contact">20487 65 Ave, Langley</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>© 2026 Ferrum Sheet Metal — All rights reserved</div>
+      <div>Langley Twp · BC · Canada</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
